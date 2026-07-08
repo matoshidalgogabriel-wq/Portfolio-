@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabriel Matos — FP&A × AI</title>
+<style>
+  :root {
+    --bg: #fdfdfb;
+    --surface: #ffffff;
+    --ink: #16181d;
+    --ink-soft: #4a5160;
+    --ink-faint: #8a909c;
+    --line: #e6e4de;
+    --accent: #0f4c81;
+    --accent-ink: #0d3e69;
+    --accent-wash: #eef4fa;
+    --gold: #b98a2e;
+    --radius: 12px;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "Cascadia Code", Consolas, "SF Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .monogram {
+    font-family: var(--serif);
+    font-weight: 700; font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .monogram span { color: var(--accent); }
+  .topnav { display: flex; gap: 22px; }
+  .topnav a {
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--ink-soft); text-decoration: none;
+  }
+  .topnav a:hover { color: var(--accent); }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 72px 0 56px; }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 0.78rem; letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    font-weight: 700; line-height: 1.12;
+    letter-spacing: -0.015em;
+    margin-bottom: 20px;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    font-size: 1.12rem; color: var(--ink-soft);
+    max-width: 620px; margin-bottom: 30px;
+  }
+  .hero-facts {
+    display: flex; flex-wrap: wrap; gap: 10px 28px;
+    font-size: 0.88rem; color: var(--ink-faint);
+    padding-top: 22px; border-top: 1px solid var(--line);
+    max-width: 620px;
+  }
+  .hero-facts strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding: 52px 0; }
+  section + section { border-top: 1px solid var(--line); }
+  .sec-label {
+    font-family: var(--mono);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* bio */
+  .bio-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 700px) { .bio-grid { grid-template-columns: 1fr; } }
+  .bio-grid p { margin-bottom: 14px; color: var(--ink-soft); }
+  .bio-grid p strong { color: var(--ink); }
+  .vp-card {
+    background: var(--accent); color: #fff;
+    border-radius: var(--radius);
+    padding: 26px 26px 24px;
+    box-shadow: 0 10px 30px -12px rgba(15, 76, 129, 0.45);
+  }
+  .vp-card h3 {
+    font-family: var(--mono);
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #bcd6ec; margin-bottom: 12px;
+  }
+  .vp-card p { font-size: 0.95rem; line-height: 1.6; color: #f0f6fb; }
+  .vp-card p + p { margin-top: 10px; }
+
+  /* skill strip */
+  .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .skills li {
+    list-style: none;
+    font-family: var(--mono); font-size: 0.78rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--line); background: var(--surface);
+    padding: 5px 12px; border-radius: 999px;
+  }
+
+  /* ---------- artifact ---------- */
+  .artifact-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(20,22,28,0.04), 0 12px 32px -18px rgba(20,22,28,0.12);
+  }
+  .artifact-head {
+    padding: 30px 36px 26px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #fafbfc 0%, var(--surface) 100%);
+  }
+  .artifact-meta {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+  }
+  .badge {
+    font-family: var(--mono); font-size: 0.72rem;
+    padding: 3px 10px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--ink-faint);
+  }
+  .badge.hl { border-color: rgba(185,138,46,0.4); color: var(--gold); }
+  .artifact-head h2 {
+    font-family: var(--serif);
+    font-size: 1.65rem; font-weight: 700; line-height: 1.25;
+    margin-bottom: 10px;
+  }
+  .artifact-head .lede { color: var(--ink-soft); max-width: 640px; }
+  .artifact-body { padding: 32px 36px 36px; }
+  @media (max-width: 620px) {
+    .artifact-head, .artifact-body { padding-left: 22px; padding-right: 22px; }
+  }
+  .artifact-body h3 {
+    font-family: var(--mono);
+    font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); margin: 34px 0 10px;
+  }
+  .artifact-body h3:first-child { margin-top: 0; }
+  .artifact-body p { color: var(--ink-soft); margin-bottom: 12px; }
+  .artifact-body p strong { color: var(--ink); }
+
+  .matrix {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 6px 0 10px;
+  }
+  @media (max-width: 620px) { .matrix { grid-template-columns: 1fr; } }
+  .matrix-cell {
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; background: var(--bg);
+  }
+  .matrix-cell.up { border-top: 3px solid var(--accent); }
+  .matrix-cell.grow { border-top: 3px solid var(--gold); }
+  .matrix-cell h4 {
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; color: var(--ink);
+  }
+  .matrix-cell ul { padding-left: 18px; }
+  .matrix-cell li { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 8px; }
+  .matrix-cell li strong { color: var(--ink); }
+
+  .vp-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 620px) { .vp-split { grid-template-columns: 1fr; } }
+  .vp-split div {
+    background: var(--accent-wash); border-radius: 10px; padding: 18px 20px;
+  }
+  .vp-split h4 {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--accent-ink); margin-bottom: 8px;
+  }
+  .vp-split p { font-size: 0.92rem; margin: 0; }
+
+  .refs { font-size: 0.86rem; color: var(--ink-faint); }
+  .refs a { color: var(--accent); }
+
+  .deliverables { display: flex; flex-direction: column; gap: 10px; margin: 6px 0 10px; }
+  .deliverable {
+    display: flex; align-items: center; gap: 14px;
+    border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 16px; text-decoration: none;
+    background: var(--bg); transition: border-color 0.15s, background 0.15s;
+  }
+  .deliverable:hover { border-color: var(--accent); background: var(--accent-wash); }
+  .deliverable-icon {
+    flex: none; width: 38px; height: 38px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.02em; color: #fff; background: var(--accent);
+  }
+  .deliverable-text { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .deliverable-title { font-size: 0.92rem; font-weight: 600; color: var(--ink); }
+  .deliverable-sub { font-size: 0.8rem; color: var(--ink-faint); }
+  .deliverable-action {
+    flex: none; font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px;
+  }
+  .deliverable:hover .deliverable-action { border-color: var(--accent); }
+
+  /* ---------- contact / footer ---------- */
+  .contact-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-size: 0.9rem; font-weight: 600;
+    padding: 10px 22px; border-radius: 8px;
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent-ink); }
+  .btn.ghost { border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 26px 0 34px;
+    font-size: 0.82rem; color: var(--ink-faint);
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* ---------- dark mode ---------- */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #101216;
+      --surface: #171a20;
+      --ink: #e9eaee;
+      --ink-soft: #b4b9c4;
+      --ink-faint: #7d8390;
+      --line: #272b33;
+      --accent: #5c9bd6;
+      --accent-ink: #7fb3e3;
+      --accent-wash: #1a2532;
+      --gold: #d1a54f;
+    }
+    .vp-card { background: #1d3a55; box-shadow: 0 10px 30px -12px rgba(0,0,0,0.5); }
+    .vp-card h3 { color: #8fb8da; }
+    .vp-card p { color: #dce9f4; }
+    .artifact-head { background: linear-gradient(180deg, #1a1d24 0%, var(--surface) 100%); }
+    .btn.primary { background: #2f6ea8; }
+    .btn.primary:hover { background: #3a7fbd; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="monogram" href="#top">Gabriel <span>Matos</span></a>
+    <nav class="topnav">
+      <a href="#about">About</a>
+      <a href="#artifact-1">Artifacts</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero wrap" id="top">
+  <div class="kicker">FP&amp;A ANALYST &middot; M.S. ARTIFICIAL INTELLIGENCE CANDIDATE</div>
+  <h1>Finance that reads the numbers.<br><em>AI that fixes the process.</em></h1>
+  <p class="hero-sub">
+    I'm Gabriel Matos. At Delta Metals I turn raw operational and financial data into
+    forecasts, dashboards, and reporting leadership can act on &mdash; and I build the
+    automation behind them myself.
+  </p>
+  <div class="hero-facts">
+    <div><strong>Delta Metals</strong> &mdash; multi-entity manufacturing</div>
+    <div><strong>Indiana Wesleyan University</strong> &mdash; M.S. AI</div>
+    <div><strong>Iowa, USA</strong></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-label">About</div>
+    <div class="bio-grid">
+      <div>
+        <p>
+          My background is <strong>accounting and finance first</strong>, which means I care about
+          accuracy and auditability as much as I care about automation. Most of what I build starts
+          the same way: find where a manual process is quietly eating hours, and replace it with
+          something that scales.
+        </p>
+        <p>
+          I'm pursuing an M.S. in Artificial Intelligence while working full time, with the goal of
+          sitting at the intersection of finance and AI &mdash; <strong>building the tools, not just
+          using them</strong>.
+        </p>
+        <ul class="skills">
+          <li>FP&amp;A</li><li>Power BI</li><li>Excel</li><li>Variance Analysis</li>
+          <li>Forecasting</li><li>Process Automation</li><li>AI Agents</li><li>Dashboard Design</li>
+        </ul>
+      </div>
+      <div class="vp-card">
+        <h3>Value Proposition</h3>
+        <p>
+          I bridge finance and AI in a way most people on either side can't: I understand the
+          numbers well enough to know when a model is actually trustworthy, and the tools well
+          enough to build the fix myself instead of waiting on IT or a vendor.
+        </p>
+        <p>
+          I find the cheap, high-impact automation wins &mdash; not the trendy ones &mdash; and
+          communicate them in language a CFO or a plant manager can use immediately.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="artifact-1">
+  <div class="wrap">
+    <div class="sec-label">Artifacts</div>
+    <div class="artifact-card">
+      <div class="artifact-head">
+        <div class="artifact-meta">
+          <span class="badge hl">Artifact 01</span>
+          <span class="badge">AIML-501 &middot; Workshop 1</span>
+          <span class="badge">Self-Assessment</span>
+        </div>
+        <h2>Leading Change: A Self-Assessment on AI/ML Leadership Readiness</h2>
+        <p class="lede">
+          A structured, honest benchmark of my readiness to <em>lead</em> AI/ML initiatives —
+          not just build them — using two formal self-assessment instruments.
+        </p>
+      </div>
+      <div class="artifact-body">
+
+        <h3>Introduction</h3>
+        <p>
+          As part of my M.S. in Artificial Intelligence coursework, I completed two structured
+          self-assessments &mdash; one on AI/ML integration leadership skills, one on general
+          change management skills &mdash; and reflected on where my instincts as a finance
+          professional already line up with effective AI/ML leadership, and where they don't yet.
+        </p>
+
+        <h3>Description</h3>
+        <p>
+          Both assessments landed close to what I already suspected about myself, but breaking it
+          into categories sharpened a few things I hadn't put into words before.
+        </p>
+        <div class="matrix">
+          <div class="matrix-cell up">
+            <h4>AI/ML Integration Leadership — Strengths</h4>
+            <ul>
+              <li><strong>Stakeholder communication:</strong> I spend most weeks translating dashboards and automation logic into something leadership can act on without needing the mechanics.</li>
+              <li><strong>Adoption strategy:</strong> I find where automation actually saves time rather than chasing AI because it's trendy — spotting the cheap, high-impact win comes naturally.</li>
+              <li><strong>Technical understanding:</strong> Real fluency, not theoretical — enough bad data problems solved to know what the requirements actually look like in practice.</li>
+            </ul>
+          </div>
+          <div class="matrix-cell grow">
+            <h4>AI/ML Integration Leadership — Growth Areas</h4>
+            <ul>
+              <li><strong>Ethics and responsible AI:</strong> No formal exposure to bias or regulatory compliance — everything I've built has been internal tooling, not customer-facing.</li>
+              <li><strong>Change readiness:</strong> I've been a builder, not a change manager — no formal training rollout or skills-gap assessment for a team adopting something new.</li>
+              <li><strong>Project management at scale:</strong> My projects have stayed scrappy and self-directed, a different skill from managing something with real budget accountability.</li>
+            </ul>
+          </div>
+          <div class="matrix-cell up">
+            <h4>Change Management — Strengths</h4>
+            <ul>
+              <li><strong>Critical thinking, communication, problem-solving</strong> — all trace back to the same instinct: figuring out why numbers don't tie is the same muscle as figuring out why a change initiative isn't landing.</li>
+            </ul>
+          </div>
+          <div class="matrix-cell grow">
+            <h4>Change Management — Growth Areas</h4>
+            <ul>
+              <li><strong>Stakeholder engagement at scale:</strong> strong one-on-one or in small groups with leadership, but no experience driving org-wide buy-in.</li>
+              <li><strong>Risk management:</strong> I tend to solve problems as they surface instead of mapping out failure points ahead of time.</li>
+              <li><strong>Navigating culture across multiple entities:</strong> I know one part of the business well, not several moving at once.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Objective</h3>
+        <p>
+          To honestly benchmark my readiness to lead AI/ML initiatives &mdash; not just build them
+          &mdash; and identify the specific gaps to close before taking on something with broader
+          organizational scope.
+        </p>
+
+        <h3>Process</h3>
+        <p>
+          I read two articles on change leadership and change-management assessment as prep, then
+          completed both self-assessment forms independently before writing a reflection. Rather
+          than accepting the category scores at face value, I evaluated the assessments themselves
+          as tools: what they measure well, where the scoring logic breaks down, and what I'd
+          revise. Both work as a decent mirror &mdash; naming specific skills beats vaguely saying
+          "I'm a good leader." The AI/ML assessment is scoped well for where the field actually is
+          right now. The change management assessment is more exhaustive, and that cuts both ways:
+          sixteen categories is a lot to rate honestly in one sitting, and the weighting feels off,
+          since a category with two questions counts the same as one with six even though they
+          clearly don't carry equal weight in how you read your own results.
+        </p>
+        <p>
+          If I were revising them, I'd add a category to the AI/ML assessment for evaluating tools
+          and vendors &mdash; knowing whether something is worth adopting is a different skill from
+          knowing how to adopt it once you've decided &mdash; and I'd fix the weighting on the
+          change management side, either by normalizing the scoring or flagging which categories
+          are core versus supplementary, because right now it distorts how you see your own
+          strengths.
+        </p>
+
+        <h3>Tools &amp; Technologies Used</h3>
+        <p>
+          AI/ML Integration Leadership Skills Self-Assessment &middot; Change Management Skills
+          Self-Assessment &middot; Microsoft Word
+        </p>
+
+        <h3>Deliverables</h3>
+        <p>
+          The two completed self-assessment forms referenced above &mdash; scored category by
+          category, with totals &mdash; are attached below as the underlying evidence for this
+          reflection.
+        </p>
+        <div class="deliverables">
+          <a class="deliverable" href="files/AI_ML Integration Leadership Skills Self-Assessment Form (Completed).docx" download>
+            <span class="deliverable-icon">DOC</span>
+            <span class="deliverable-text">
+              <span class="deliverable-title">AI/ML Integration Leadership Skills Self-Assessment</span>
+              <span class="deliverable-sub">Completed form &middot; Score: 98/140 &middot; .docx</span>
+            </span>
+            <span class="deliverable-action">Download</span>
+          </a>
+          <a class="deliverable" href="files/Change Management Skills Self-Assessment Form (Completed).docx" download>
+            <span class="deliverable-icon">DOC</span>
+            <span class="deliverable-text">
+              <span class="deliverable-title">Change Management Skills Self-Assessment</span>
+              <span class="deliverable-sub">Completed form &middot; 17 categories scored &middot; .docx</span>
+            </span>
+            <span class="deliverable-action">Download</span>
+          </a>
+        </div>
+
+        <h3>Value Proposition</h3>
+        <div class="vp-split">
+          <div>
+            <h4>Unique Value</h4>
+            <p>
+              Most people either build the technical solution or manage the organizational change
+              &mdash; rarely both. This artifact shows I can do the self-diagnosis honestly enough
+              to know which side of that line I'm currently strong on, and where I still need reps
+              before leading something larger than a self-directed project.
+            </p>
+          </div>
+          <div>
+            <h4>Relevance</h4>
+            <p>
+              For an employer evaluating whether I'm ready to lead an AI/ML initiative rather than
+              just execute one, this shows the self-awareness that makes growth in that direction
+              credible &mdash; not a claim, but a documented, specific accounting of strengths,
+              gaps, and next steps.
+            </p>
+          </div>
+        </div>
+
+        <h3>References</h3>
+        <p class="refs">
+          Center for Creative Leadership. (n.d.). <em>How to be a successful change leader.</em>
+          <a href="https://www.ccl.org/articles/leading-effectively-articles/successful-change-leader/" target="_blank" rel="noopener">ccl.org</a><br>
+          Change Strategists. (n.d.). <em>How to assess change management skills.</em>
+          <a href="https://changestrategists.com/how-to-assess-change-management-skills/" target="_blank" rel="noopener">changestrategists.com</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-label">Contact</div>
+    <div class="contact-row">
+      <a class="btn primary" href="mailto:matos.hidalgo.gabriel@gmail.com">Email me</a>
+      <a class="btn ghost" href="#" title="Add your LinkedIn URL">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>&copy; 2026 Gabriel Matos</div>
+    <div>Professional Portfolio &middot; AIML-501</div>
+  </div>
+</footer>
+
+</body>
+</html>
