@@ -488,6 +488,150 @@
   </div>
 </section>
 
+<section id="artifact-2">
+  <div class="wrap">
+    <div class="artifact-card">
+      <div class="artifact-head">
+        <div class="artifact-meta">
+          <span class="badge hl">Artifact 02</span>
+          <span class="badge">AIML-500 &middot; Workshop 1</span>
+          <span class="badge">AI Product / Design Thinking</span>
+        </div>
+        <h2>Interview Prep Coach: A Design-Thinking Chatbot</h2>
+        <p class="lede">
+          A no-code AI chatbot built with a team in one workshop, using the full design-thinking
+          process to go from a raw pain point to a tested, working product.
+        </p>
+      </div>
+      <div class="artifact-body">
+
+        <h3>Introduction</h3>
+        <p>
+          This was a team project for AIML-500, Workshop 1 (Group 2, eight members). The
+          assignment was to apply design thinking end-to-end &mdash; empathize, define, ideate,
+          prototype, test &mdash; to build a working AI chatbot. Our group targeted a problem
+          several of us were living through that same week: preparing for AI/ML and Data
+          interviews with no structured, affordable way to practice.
+        </p>
+
+        <h3>Description</h3>
+        <p>
+          We built <strong>Interview Prep Coach</strong>, a chatbot on Chatbase that does two
+          things: generates five role-specific interview questions (one warm-up, two technical,
+          one behavioral, one curveball) with a hint on what interviewers are actually listening
+          for, and evaluates a candidate's answer in four parts &mdash; what worked, what's
+          missing, what to add, and a stronger reference version. All of the logic lives in one
+          carefully iterated system prompt, no custom code.
+        </p>
+        <div class="matrix">
+          <div class="matrix-cell up">
+            <h4>What Existing Options Got Wrong</h4>
+            <ul>
+              <li><strong>Prep books:</strong> not role-specific &mdash; an ML Engineer interview and a Data Scientist interview are completely different conversations.</li>
+              <li><strong>Reddit / Glassdoor threads:</strong> hours of unstructured, often outdated scrolling with no way to actually practice.</li>
+              <li><strong>Paid coaches:</strong> effective but $50&ndash;$200 per session &mdash; out of reach for most students and OPT job hunters.</li>
+              <li><strong>Solo practice:</strong> no honest feedback, no read on whether an answer sounds sharp or generic.</li>
+            </ul>
+          </div>
+          <div class="matrix-cell grow">
+            <h4>What Testing Caught</h4>
+            <ul>
+              <li><strong>Version 1 bug:</strong> the bot gave scripted, memorizable answers &mdash; exactly what we didn't want.</li>
+              <li><strong>Version 2 bug:</strong> follow-up questions were generic enough to apply to any role, with no company-type specificity.</li>
+              <li><strong>The fix:</strong> two rounds of system-prompt iteration resolved both. 14 of 15 documented test scenarios passed outright; one (roleplay as interviewer) was a partial pass.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Objective</h3>
+        <p>
+          Close the gap between what candidates need &mdash; role-specific practice questions and
+          honest feedback on their answers &mdash; and what's actually accessible: instantly, and
+          for free. The goal was a working tool, not a slide-deck concept.
+        </p>
+
+        <h3>Process</h3>
+        <p>
+          <strong>Empathize:</strong> our first instinct was to scrape sites like Glassdoor and
+          build a large database of real interview questions. Talking through the actual pain
+          point showed that quantity of questions was never the problem &mdash; the missing piece
+          was structure and feedback. That insight alone saved an estimated two weeks of
+          unnecessary engineering. <strong>Define &amp; ideate:</strong> we reframed the problem
+          around two functions only &mdash; generating targeted questions and evaluating answers
+          &mdash; and designed a single system prompt to handle both. <strong>Prototype &amp;
+          test:</strong> we ran 15 test scenarios against the bot, from basic prep requests and
+          off-topic questions to edge cases like salary negotiation advice, vague input,
+          illegal interview questions, and contradictory user info &mdash; logging every result.
+        </p>
+
+        <h3>Tools &amp; Technologies Used</h3>
+        <p>
+          Chatbase (no-code chatbot platform, free tier) &middot; System prompt engineering
+          &middot; Design thinking framework &middot; Microsoft PowerPoint
+        </p>
+
+        <h3>Deliverables</h3>
+        <p>
+          The full team presentation &mdash; problem framing, live demo transcript, and the
+          complete 15-scenario test log &mdash; plus my own write-up of the project for this
+          portfolio, are attached below.
+        </p>
+        <div class="deliverables">
+          <a class="deliverable" href="files/Interview Prep Coach - Presentation.pptx" download>
+            <span class="deliverable-icon">PPT</span>
+            <span class="deliverable-text">
+              <span class="deliverable-title">Interview Prep Coach &mdash; Team Presentation</span>
+              <span class="deliverable-sub">Problem, solution, live demo, test log &middot; .pptx</span>
+            </span>
+            <span class="deliverable-action">Download</span>
+          </a>
+          <a class="deliverable" href="files/Interview Prep Coach - Artifact Writeup.docx" download>
+            <span class="deliverable-icon">DOC</span>
+            <span class="deliverable-text">
+              <span class="deliverable-title">Artifact Write-Up</span>
+              <span class="deliverable-sub">What it is, how we built it, why it matters &middot; .docx</span>
+            </span>
+            <span class="deliverable-action">Download</span>
+          </a>
+        </div>
+
+        <h3>Value Proposition</h3>
+        <div class="vp-split">
+          <div>
+            <h4>Unique Value</h4>
+            <p>
+              This shows I can work inside a cross-functional team to take an AI product from a
+              raw pain point to a tested, working tool in a single workshop, without writing a
+              line of traditional code. The empathize-stage pivot &mdash; structure and feedback,
+              not more questions &mdash; is the judgment call that separates a tool people
+              actually use from one that just looks impressive.
+            </p>
+          </div>
+          <div>
+            <h4>Relevance</h4>
+            <p>
+              For an employer evaluating whether I can operate in AI product development, not
+              just financial systems, this shows structured testing discipline, the ability to
+              catch and fix real failure modes in an AI system's behavior, and comfort applying a
+              human-centered design process to a technical build.
+            </p>
+          </div>
+        </div>
+
+        <h3>References</h3>
+        <p class="refs">
+          Group 2 (AIML-500, Workshop 1): Raja Narender Reddy Lingaladinne, Ankita Chandra,
+          Gabriel Matos, Ayesha Fayyaz, Charishma Chundu, Neha Mudiraj Light, Sai Sri Gottapu,
+          Rithish Reddy Gosukonda.<br>
+          Professor Lawrence Iweriebor &middot; Indiana Wesleyan University &middot; July 12, 2026<br>
+          Live bot: <a href="https://www.chatbase.co/B_hX8l5FC4GH_uthtMgUL/help" target="_blank" rel="noopener">chatbase.co/B_hX8l5FC4GH_uthtMgUL</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="contact">
   <div class="wrap">
     <div class="sec-label">Contact</div>
