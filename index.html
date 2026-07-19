@@ -504,105 +504,86 @@
       <div class="artifact-head">
         <div class="artifact-meta">
           <span class="badge hl">Artifact 02</span>
-          <span class="badge">AIML-500 &middot; Workshop 1</span>
-          <span class="badge">AI Product / Design Thinking</span>
+          <span class="badge">AIML-501 &middot; Assignment 2.3</span>
+          <span class="badge">Technical Writing / Model Selection</span>
         </div>
-        <h2>Interview Prep Coach: A Design-Thinking Chatbot</h2>
+        <h2>Machine Learning vs. Deep Learning: A Case Study Comparison</h2>
         <p class="lede">
-          A no-code AI chatbot built with a team in one workshop, using the full design-thinking
-          process to go from a raw pain point to a tested, working product.
+          A written analysis of when to reach for a simple machine learning model and when the
+          problem actually calls for deep learning, argued through two real-world cases.
         </p>
-        <a class="btn primary" href="https://www.chatbase.co/B_hX8l5FC4GH_uthtMgUL/help" target="_blank" rel="noopener" style="display: inline-block; margin-top: 18px;">
-          Try the Live Bot &rarr;
-        </a>
       </div>
       <div class="artifact-body">
 
         <h3>Introduction</h3>
         <p>
-          This was a team project for AIML-500, Workshop 1 (Group 2, eight members). The
-          assignment was to apply design thinking end-to-end (empathize, define, ideate,
-          prototype, test) to build a working AI chatbot. Our group targeted a problem
-          several of us were living through that same week: preparing for AI/ML and Data
-          interviews with no structured, affordable way to practice.
+          This is a written assignment from AIML-501 (Assignment 2.3). The task was to compare
+          machine learning and deep learning through concrete examples rather than definitions,
+          showing not just what each approach does but when picking one over the other is the
+          right call.
         </p>
 
         <h3>Description</h3>
         <p>
-          We built <strong>Interview Prep Coach</strong>, a chatbot on Chatbase that does two
-          things: generates five role-specific interview questions (one warm-up, two technical,
-          one behavioral, one curveball) with a hint on what interviewers are actually listening
-          for, and evaluates a candidate's answer in four parts: what worked, what's
-          missing, what to add, and a stronger reference version. All of the logic lives in one
-          carefully iterated system prompt. We didn't write any custom code.
+          The paper walks through two contrasting cases: customer churn prediction, where a
+          support vector machine is the right tool, and facial recognition, where a convolutional
+          neural network is the right tool. For each, I make the case for why that approach fits
+          and why the other one would fall short.
         </p>
         <div class="matrix">
           <div class="matrix-cell up">
-            <h4>What Existing Options Got Wrong</h4>
+            <h4>Case 1: Customer Churn (SVM)</h4>
             <ul>
-              <li><strong>Prep books:</strong> not role-specific. An ML Engineer interview and a Data Scientist interview are completely different conversations.</li>
-              <li><strong>Reddit / Glassdoor threads:</strong> hours of unstructured, often outdated scrolling with no way to actually practice.</li>
-              <li><strong>Paid coaches:</strong> effective but $50 to $200 per session, out of reach for most students and OPT job hunters.</li>
-              <li><strong>Solo practice:</strong> no honest feedback, no read on whether an answer sounds sharp or generic.</li>
+              <li><strong>Why SVM fits:</strong> the data is structured (account age, contract length, monthly charges, support calls) and the features already mean something on their own. A retention manager can see exactly why an account got flagged.</li>
+              <li><strong>Why deep learning would lose:</strong> churn datasets run in the tens of thousands of records, not the millions a neural network needs to beat a simpler model. It would also trade a decision that has to be explained for a black box, without enough accuracy gain to justify the loss.</li>
             </ul>
           </div>
           <div class="matrix-cell grow">
-            <h4>What Testing Caught</h4>
+            <h4>Case 2: Facial Recognition (CNN)</h4>
             <ul>
-              <li><strong>Version 1 bug:</strong> the bot gave scripted, memorizable answers, exactly what we didn't want.</li>
-              <li><strong>Version 2 bug:</strong> follow-up questions were generic enough to apply to any role, with no company-type specificity.</li>
-              <li><strong>The fix:</strong> two rounds of system-prompt iteration resolved both. 14 of 15 documented test scenarios passed outright; one (roleplay as interviewer) was a partial pass.</li>
+              <li><strong>Why CNN fits:</strong> nobody can hand-write reliable features for a face. A CNN learns its own feature hierarchy straight from raw pixels, starting with edges and textures and building up to full facial structures.</li>
+              <li><strong>Why a simple model would lose:</strong> hand-picked measurements throw away almost all the information in the image and break down under a new camera angle, different lighting, or a mask.</li>
             </ul>
           </div>
         </div>
 
         <h3>Objective</h3>
         <p>
-          Close the gap between what candidates need (role-specific practice questions and
-          honest feedback on their answers) and what's actually accessible: instantly, and
-          for free. The goal was a working tool, not a slide-deck concept.
+          To build the habit of matching model complexity to the actual shape of the data and
+          the business need, instead of defaulting to whichever approach sounds more advanced.
+          Structured, moderately sized data where the reasoning has to be explainable favors a
+          simple model; raw, high-dimensional data where useful features cannot realistically be
+          hand-built favors deep learning.
         </p>
 
         <h3>Process</h3>
         <p>
-          <strong>Empathize:</strong> our first instinct was to scrape sites like Glassdoor and
-          build a large database of real interview questions. Talking through the actual pain
-          point showed that quantity of questions was never the problem: the missing piece
-          was structure and feedback. That insight alone saved an estimated two weeks of
-          unnecessary engineering. <strong>Define &amp; ideate:</strong> we reframed the problem
-          around two functions only (generating targeted questions and evaluating answers)
-          and designed a single system prompt to handle both. <strong>Prototype &amp;
-          test:</strong> we ran 15 test scenarios against the bot, from basic prep requests and
-          off-topic questions to edge cases like salary negotiation advice, vague input,
-          illegal interview questions, and contradictory user info, logging every result.
+          I started from the course readings on machine learning and deep learning fundamentals,
+          then picked two use cases that sit on opposite ends of the same decision: one where
+          interpretability and a small structured dataset make the classical model the obvious
+          choice, and one where the problem itself (unstructured pixel data with no hand-codable
+          features) rules out anything but a deep network. For each case, I argued both directions:
+          why the chosen model fits, and specifically why the alternative would underperform,
+          rather than just describing what each algorithm does in isolation.
         </p>
 
         <h3>Tools &amp; Technologies Used</h3>
         <p>
-          Chatbase (no-code chatbot platform, free tier) &middot; System prompt engineering
-          &middot; Design thinking framework &middot; Microsoft PowerPoint
+          Research and technical writing &middot; Course readings (Géron; Goodfellow, Bengio &amp;
+          Courville; IBM Think) &middot; Microsoft Word
         </p>
 
         <h3>Deliverables</h3>
         <p>
-          The full team presentation (problem framing, live demo transcript, and the
-          complete 15-scenario test log), plus my own write-up of the project for this
-          portfolio, are attached below.
+          The full written analysis, including both case studies and references, is attached
+          below.
         </p>
         <div class="deliverables">
-          <a class="deliverable" href="files/Interview Prep Coach - Presentation.pptx" download>
-            <span class="deliverable-icon">PPT</span>
-            <span class="deliverable-text">
-              <span class="deliverable-title">Interview Prep Coach: Team Presentation</span>
-              <span class="deliverable-sub">Problem, solution, live demo, test log &middot; .pptx</span>
-            </span>
-            <span class="deliverable-action">Download</span>
-          </a>
-          <a class="deliverable" href="files/Interview Prep Coach - Artifact Writeup.docx" download>
+          <a class="deliverable" href="files/Matos_Gabriel_Assigment 2.3.docx" download>
             <span class="deliverable-icon">DOC</span>
             <span class="deliverable-text">
-              <span class="deliverable-title">Artifact Write-Up</span>
-              <span class="deliverable-sub">What it is, how we built it, why it matters &middot; .docx</span>
+              <span class="deliverable-title">Machine Learning vs. Deep Learning: A Case Study Comparison</span>
+              <span class="deliverable-sub">Full written analysis &middot; .docx</span>
             </span>
             <span class="deliverable-action">Download</span>
           </a>
@@ -613,31 +594,34 @@
           <div>
             <h4>Unique Value</h4>
             <p>
-              This shows I can work inside a cross-functional team to take an AI product from a
-              raw pain point to a tested, working tool in a single workshop, without writing a
-              line of traditional code. The empathize-stage pivot (structure and feedback,
-              not more questions) is the judgment call that separates a tool people
-              actually use from one that just looks impressive.
+              This shows I don't reach for the most complex or trendy model by default. I match
+              model choice to the shape of the data and to whether the business actually needs
+              the decision explained, the same instinct that shapes which automation is worth
+              building at Delta Metals and which isn't.
             </p>
           </div>
           <div>
             <h4>Relevance</h4>
             <p>
-              For an employer evaluating whether I can operate in AI product development, not
-              just financial systems, this shows structured testing discipline, the ability to
-              catch and fix real failure modes in an AI system's behavior, and comfort applying a
-              human-centered design process to a technical build.
+              For an employer evaluating whether I can guide AI/ML tool and vendor decisions, not
+              just execute on a model someone else picked, this shows the reasoning behind a
+              build-versus-buy or simple-versus-complex call, not just familiarity with the
+              vocabulary.
             </p>
           </div>
         </div>
 
         <h3>References</h3>
         <p class="refs">
-          Group 2 (AIML-500, Workshop 1): Raja Narender Reddy Lingaladinne, Ankita Chandra,
-          Gabriel Matos, Ayesha Fayyaz, Charishma Chundu, Neha Mudiraj Light, Sai Sri Gottapu,
-          Rithish Reddy Gosukonda.<br>
-          Professor Lawrence Iweriebor &middot; Indiana Wesleyan University &middot; July 12, 2026<br>
-          Live bot: <a href="https://www.chatbase.co/B_hX8l5FC4GH_uthtMgUL/help" target="_blank" rel="noopener">chatbase.co/B_hX8l5FC4GH_uthtMgUL</a>
+          Géron, A. (2019). <em>Hands-on machine learning with Scikit-Learn, Keras, and
+          TensorFlow</em> (2nd ed.). O'Reilly Media.<br>
+          Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). <em>Deep learning.</em> MIT Press.<br>
+          IBM. (2023). <em>What is a support vector machine?</em> IBM Think.
+          <a href="https://www.ibm.com/topics/support-vector-machine" target="_blank" rel="noopener">ibm.com/topics/support-vector-machine</a><br>
+          IBM. (2023). <em>What is deep learning?</em> IBM Think.
+          <a href="https://www.ibm.com/topics/deep-learning" target="_blank" rel="noopener">ibm.com/topics/deep-learning</a><br>
+          IBM. (2023). <em>What are convolutional neural networks?</em> IBM Think.
+          <a href="https://www.ibm.com/topics/convolutional-neural-networks" target="_blank" rel="noopener">ibm.com/topics/convolutional-neural-networks</a>
         </p>
 
       </div>
