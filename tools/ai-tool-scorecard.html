@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI/ML Tool Evaluation Scorecard (Sample)</title>
+<style>
+  * { box-sizing: border-box; }
+  html { color-scheme: light; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--page);
+    color: var(--text-primary);
+  }
+  .viz-root {
+    --page:           #f9f9f7;
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --border:         rgba(11,11,11,0.10);
+    --series-1:       #2a78d6;
+    --good:           #0ca30c;
+    --warning:        #b8790c;
+    --critical:       #d03b3b;
+    --good-wash:      #e7f6e7;
+    --warning-wash:   #faf1de;
+    --critical-wash:  #fbe9e8;
+  }
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) { color-scheme: dark; }
+    :root:not([data-theme="light"]) body { background: #0d0d0d; }
+    :root:not([data-theme="light"]) .viz-root {
+      --page: #0d0d0d; --surface-1: #1a1a19; --text-primary: #ffffff;
+      --text-secondary: #c3c2b7; --text-muted: #898781; --grid: #2c2c2a;
+      --border: rgba(255,255,255,0.10); --series-1: #3987e5;
+      --good-wash: #10230f; --warning-wash: #2a2110; --critical-wash: #2a1414;
+    }
+  }
+  :root[data-theme="dark"] body { background: #0d0d0d; }
+  :root[data-theme="dark"] .viz-root {
+    --page: #0d0d0d; --surface-1: #1a1a19; --text-primary: #ffffff;
+    --text-secondary: #c3c2b7; --text-muted: #898781; --grid: #2c2c2a;
+    --border: rgba(255,255,255,0.10); --series-1: #3987e5;
+    --good-wash: #10230f; --warning-wash: #2a2110; --critical-wash: #2a1414;
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 24px 60px; }
+  .eyebrow { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+  h1 { font-size: 1.45rem; margin: 0 0 8px; font-weight: 700; }
+  .sub { color: var(--text-secondary); font-size: 0.94rem; max-width: 620px; margin-bottom: 6px; }
+  .disclaimer { font-size: 0.78rem; color: var(--text-muted); border-left: 2px solid var(--grid); padding-left: 10px; margin: 14px 0 24px; }
+
+  .panel { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 20px; }
+  .panel h2 { font-size: 0.92rem; font-weight: 600; margin: 0 0 4px; }
+  .panel .panel-sub { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 16px; }
+
+  .criterion { padding: 14px 0; border-bottom: 1px solid var(--grid); }
+  .criterion:last-child { border-bottom: none; }
+  .criterion-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 3px; }
+  .criterion-name { font-weight: 600; font-size: 0.92rem; }
+  .criterion-weight { font-size: 0.76rem; color: var(--text-muted); flex: none; }
+  .criterion-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px; }
+  .score-row { display: flex; align-items: center; gap: 10px; }
+  input[type="range"] { flex: 1; accent-color: var(--series-1); }
+  .score-val { font-variant-numeric: tabular-nums; font-weight: 700; width: 22px; text-align: right; }
+
+  .result-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 22px; text-align: center; margin-bottom: 20px; }
+  .result-score { font-size: 2.2rem; font-weight: 700; margin-bottom: 4px; }
+  .result-label { font-size: 0.85rem; padding: 4px 14px; border-radius: 999px; display: inline-block; font-weight: 600; }
+  .result-label.good { background: var(--good-wash); color: var(--good); }
+  .result-label.warning { background: var(--warning-wash); color: var(--warning); }
+  .result-label.critical { background: var(--critical-wash); color: var(--critical); }
+  .result-note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 10px; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+  footer.foot { font-size: 0.78rem; color: var(--text-muted); margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="viz-root">
+  <div class="wrap">
+
+    <div class="eyebrow">AI/ML Tool Adoption &middot; Working Scorecard</div>
+    <h1>AI/ML Tool Evaluation Scorecard</h1>
+    <p class="sub">
+      A weighted framework for deciding whether an AI/ML tool is worth adopting,
+      built to fill the exact gap I flagged in my own leadership self-assessment:
+      knowing whether something is worth adopting is a different skill from
+      knowing how to adopt it once you've decided.
+    </p>
+    <p class="disclaimer">
+      This is a self-directed exercise, not a submitted class assignment. Sliders
+      default to a sample scenario; adjust them to score a real tool.
+    </p>
+
+    <div class="result-tile" id="result-tile"></div>
+
+    <div class="panel">
+      <h2>Weighted Criteria</h2>
+      <p class="panel-sub">Score each 1 (poor) to 5 (excellent). Weights reflect how much each factor should move the decision.</p>
+      <div id="criteria-list"></div>
+    </div>
+
+    <footer class="foot">
+      Weighting rationale: problem fit and data readiness carry the most weight
+      because a tool that is wrong for the problem or the data cannot be fixed
+      with better change management. Cost and integration effort carry the
+      least, because those are real but solvable constraints, not disqualifiers.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+const criteria = [
+  { key: "fit", name: "Problem Fit", weight: 5,
+    desc: "Does this tool solve a real, specific problem, or is it a solution looking for one?", default: 4 },
+  { key: "data", name: "Data Readiness", weight: 5,
+    desc: "Do we already have the data this tool needs, at the volume and quality it needs?", default: 3 },
+  { key: "explain", name: "Explainability", weight: 4,
+    desc: "Can the output be explained to the person who has to act on it?", default: 3 },
+  { key: "risk", name: "Vendor / Lock-in Risk", weight: 3,
+    desc: "How hard would it be to walk away from this tool in two years?", default: 3 },
+  { key: "maintain", name: "Maintenance Burden", weight: 3,
+    desc: "Who keeps this working after the initial build, and how much of their time does it take?", default: 3 },
+  { key: "cost", name: "Cost vs. Alternative", weight: 2,
+    desc: "Compared to a simpler fix or doing nothing, is the cost justified?", default: 4 },
+  { key: "integration", name: "Integration Effort", weight: 2,
+    desc: "How much has to change in existing workflows and systems to use this?", default: 3 },
+];
+
+const listEl = document.getElementById("criteria-list");
+listEl.innerHTML = criteria.map(c => `
+  <div class="criterion">
+    <div class="criterion-top">
+      <span class="criterion-name">${c.name}</span>
+      <span class="criterion-weight">Weight &times;${c.weight}</span>
+    </div>
+    <div class="criterion-desc">${c.desc}</div>
+    <div class="score-row">
+      <input type="range" min="1" max="5" step="1" value="${c.default}" id="range-${c.key}">
+      <span class="score-val" id="val-${c.key}">${c.default}</span>
+    </div>
+  </div>
+`).join("");
+
+function computeAndRender() {
+  let weightedSum = 0, weightTotal = 0;
+  criteria.forEach(c => {
+    const val = parseInt(document.getElementById(`range-${c.key}`).value, 10);
+    document.getElementById(`val-${c.key}`).textContent = val;
+    weightedSum += val * c.weight;
+    weightTotal += c.weight;
+  });
+  const score = weightedSum / weightTotal; // 1-5 scale
+
+  let label, cls, note;
+  if (score >= 3.8) {
+    label = "Adopt"; cls = "good";
+    note = "Strong case across the board. Move forward, but still confirm data readiness before committing budget.";
+  } else if (score >= 2.8) {
+    label = "Pilot First"; cls = "warning";
+    note = "Mixed signals. Worth a small, time-boxed pilot on the weakest criteria before a full commitment.";
+  } else {
+    label = "Pass"; cls = "critical";
+    note = "Too many low scores to justify the effort right now. Revisit if the weak criteria change.";
+  }
+
+  document.getElementById("result-tile").innerHTML = `
+    <div class="result-score">${score.toFixed(1)} / 5</div>
+    <span class="result-label ${cls}">${label}</span>
+    <div class="result-note">${note}</div>
+  `;
+}
+
+criteria.forEach(c => {
+  document.getElementById(`range-${c.key}`).addEventListener("input", computeAndRender);
+});
+computeAndRender();
+</script>
+</body>
+</html>
